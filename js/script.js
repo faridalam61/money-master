@@ -38,7 +38,7 @@ discountBtn.addEventListener('click', () => {
     const remainingBalance = document.getElementById('remaining-balance');
 
     if (parseFloat(balance.innerText) > 0) {
-        if (discountPercent > 0) {
+        if (discountPercent > 0 && discountPercent <= 100) {
             const discount = discountPercent / 100;
             const save = parseFloat(balance.innerText) * discount;
             savingAmount.innerText = save;
