@@ -1,43 +1,54 @@
-const income = document.getElementById('income');
-const foodCost = document.getElementById('food-cost');
-const rentCost = document.getElementById('rent');
-const clothingCost = document.getElementById('clothing-cost');
-
 const calculateBtn = document.getElementById('calculate');
-
 const totalExpense = document.getElementById('total-expense');
 const balance = document.getElementById('balance');
-
-const discountPercent = document.getElementById('discount');
 const discountBtn = document.getElementById('discount-btn');
 
-const savingAmount = document.getElementById('saving-amount');
-const remainingBalance = document.getElementById('remaining-balance');
 
 calculateBtn.addEventListener('click', () => {
-    const totalExp = parseFloat(foodCost.value) + parseFloat(rentCost.value) + parseFloat(clothingCost.value);
-    if (!isNaN(totalExp) && totalExp >0) {
-        if (parseFloat(income.value) >= totalExp) {
-           const newBalance = parseFloat(income.value) - totalExp;
-           totalExpense.innerText = totalExp;
-           balance.innerText = newBalance;
+    const income = parseFloat(document.getElementById('income').value);
+    const foodCost = parseFloat(document.getElementById('food-cost').value);
+    const rentCost = parseFloat(document.getElementById('rent').value);
+    const clothingCost = parseFloat(document.getElementById('clothing-cost').value);
+
+    const totalExp = foodCost + rentCost + clothingCost;
+
+   
+    if (!isNaN(income) && !isNaN(foodCost) && !isNaN(rentCost) && !isNaN(clothingCost)) {
+            if (income >= 0 && foodCost >= 0 && rentCost >= 0 && clothingCost >= 0) {
+                if (income > totalExp) {
+                    const newBalance = income - totalExp;
+                    totalExpense.innerText = totalExp;
+                    balance.innerText = newBalance;
+                } else {
+                    alert("Expenses can't be greater than income")
+                }
+            } else {
+                alert('Enter positive numbers')
+            }
         } else {
-            alert("Expenses can't be greater than income")
-       }
-    } else {
-        alert('Enter Valid numbers')
-   }
-    
-    
+            alert('Enter valid numbers')
+        
+        }
 })
 
 
 discountBtn.addEventListener('click', () => {
-    const discount = parseInt(discountPercent.value) / 100;
-    const save = parseFloat(balance.innerText) * discount;
-    savingAmount.innerText = save;
+    const discountPercent = parseInt(document.getElementById('discount').value);
+    const savingAmount = document.getElementById('saving-amount');
+    const remainingBalance = document.getElementById('remaining-balance');
 
-    const remaining = parseFloat(balance.innerText) - save;
-    remainingBalance.innerText = remaining;
+    if (parseFloat(balance.innerText) > 0) {
+        if (discountPercent > 0) {
+            const discount = discountPercent / 100;
+            const save = parseFloat(balance.innerText) * discount;
+            savingAmount.innerText = save;
 
+            const remaining = parseFloat(balance.innerText) - save;
+            remainingBalance.innerText = remaining; 
+        } else {
+            alert('Invalid discount percentage')
+        }
+    } else {
+        alert('You have no money')
+    }
 })
